@@ -14,10 +14,32 @@ const MainPage: React.FC = () => {
   const [phase, setPhase] = useState<Phase>("landing");
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white overflow-hidden">
+    <div className="relative h-screen w-full overflow-hidden text-white bg-black flex flex-col">
+      {/* Simple Star Background */}
+      <div className="absolute inset-0">
+        {[...Array(150)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute bg-white rounded-full"
+            style={{
+              width: `${Math.random() * 2 + 1}px`,
+              height: `${Math.random() * 2 + 1}px`,
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+              opacity: Math.random() * 0.8 + 0.2,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Optional subtle radial gradient */}
+      <div className="absolute inset-0 bg-gradient-radial from-transparent via-black/20 to-black" />
+
+      {/* Navigation */}
       <Navigation current={phase} setPhase={setPhase} />
 
-      <div className="relative w-full h-full">
+      {/* Main Content */}
+      <div className="relative z-10 w-full flex-1 flex items-center justify-center">
         <AnimatePresence mode="wait">
           {phase === "landing" && (
             <motion.div
@@ -26,6 +48,7 @@ const MainPage: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -40 }}
               transition={{ duration: 0.6 }}
+              className="w-full h-full flex items-center justify-center"
             >
               <Landing setPhase={setPhase} />
             </motion.div>
@@ -38,6 +61,7 @@ const MainPage: React.FC = () => {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -80 }}
               transition={{ duration: 0.6 }}
+              className="w-full h-full flex items-center justify-center"
             >
               <Projects />
             </motion.div>
@@ -50,6 +74,7 @@ const MainPage: React.FC = () => {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.6 }}
+              className="w-full h-full flex items-center justify-center"
             >
               <Skills />
             </motion.div>
@@ -62,6 +87,7 @@ const MainPage: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -80 }}
               transition={{ duration: 0.6 }}
+              className="w-full h-full flex items-center justify-center"
             >
               <Contact />
             </motion.div>

@@ -2,30 +2,42 @@
 
 import React from "react";
 
+type Phase = "landing" | "projects" | "skills" | "contact";
+
 type Props = {
-  current: string;
-  setPhase: (phase: "landing" | "projects" | "skills" | "contact") => void;
+  current: Phase;
+  setPhase: (phase: Phase) => void;
 };
 
 const Navigation: React.FC<Props> = ({ current, setPhase }) => {
-  const links = ["landing", "projects", "skills", "contact"] as const;
+  const links: Phase[] = ["landing", "projects", "skills", "contact"];
 
   return (
-    <nav className="flex justify-center space-x-8 py-6 text-lg font-medium">
-      {links.map((link) => (
-        <button
-          key={link}
-          onClick={() => setPhase(link)}
-          className={`relative capitalize transition ${
-            current === link ? "text-purple-400" : "text-gray-400 hover:text-white"
-          }`}
-        >
-          {link}
-          {current === link && (
-            <span className="absolute left-0 right-0 -bottom-2 h-0.5 bg-purple-400 rounded-full"></span>
-          )}
-        </button>
-      ))}
+    <nav className="flex justify-center gap-6 md:gap-10 py-4 bg-black/20 backdrop-blur-sm rounded-b-xl shadow-sm z-20 relative">
+      {links.map((link) => {
+        const isActive = current === link;
+
+        return (
+          <button
+            key={link}
+            onClick={() => setPhase(link)}
+            className={`
+              relative capitalize px-4 py-2 rounded-full text-sm md:text-base font-medium
+              transition-all duration-300
+              ${
+                isActive
+                  ? "text-teal-300 font-semibold"
+                  : "text-gray-300 hover:text-teal-300 hover:bg-teal-300/10"
+              }
+            `}
+          >
+            {link}
+            {isActive && (
+              <span className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-6 h-0.5 bg-teal-300 rounded-full"></span>
+            )}
+          </button>
+        );
+      })}
     </nav>
   );
 };
